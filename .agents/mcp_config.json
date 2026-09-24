@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "@vineethnkrishnan/vercel-mcp"],
+      "env": {
+        "VERCEL_PROJECT_ID": "lovely-book"
+      }
+    }
+  }
+}
