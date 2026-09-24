@@ -1,0 +1,308 @@
+{{ define "main" }}
+<main class="main-content">
+
+  <!-- ==================== HERO SECTION (Title & LOVELYS Presentation) ==================== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-backdrop"></div>
+    <div class="hero-container">
+      
+      <!-- Left: 9 LOVELYS Characters Showcase Grid -->
+      <div class="hero-characters-showcase">
+        <div class="characters-cluster-card">
+          <div class="cluster-badge">
+            <span class="cluster-star">✦</span>
+            <span>9 LOVELYS 冒險隊</span>
+            <span class="cluster-star">✦</span>
+          </div>
+          <div class="cluster-avatars-grid">
+            {{ range hugo.Data.lovelys }}
+            <a href="#char-card-{{ .id }}" class="cluster-avatar-item" style="--char-color: {{ .color }};" title="{{ .nameJa }} ({{ .nameEn }}) - {{ .member }}">
+              <div class="cluster-img-wrap">
+                <img src="{{ (printf "characters/%s.jpg" .nameEn) | relURL }}" alt="{{ .nameJa }}" class="cluster-img" loading="lazy">
+              </div>
+              <span class="cluster-name">{{ .nameJa }}</span>
+            </a>
+            {{ end }}
+          </div>
+          <div class="cluster-fruit-banner">
+            <span class="fruit-icon">🍓</span>
+            <span class="fruit-text">尋找不可思議的 Lovely 水果！</span>
+            <span class="fruit-icon">✨</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Book Title, Obi Band & Info -->
+      <div class="hero-details">
+        <div class="book-title-ribbon">
+          <span class="ribbon-star">✧</span>
+          <span class="ribbon-text">TWICE LOVELYS えほん</span>
+          <span class="ribbon-star">✧</span>
+        </div>
+
+        <h1 class="book-main-title">
+          <span class="title-ja">ラブリーフルーツをさがして</span>
+          <span class="title-zh">尋找 Lovely 水果</span>
+        </h1>
+
+        <p class="hero-tagline">
+          🌸 日文原文 × 繁體中文對照｜全 22 節可愛冒險繪本
+        </p>
+
+        <!-- Obi (帯) Style Callout Card -->
+        <div class="book-obi-card">
+          <div class="obi-top-row">
+            <span class="obi-badge-pill">TWICE 公式キャラクター</span>
+          </div>
+          <div class="obi-headline">
+            TWICE LOVELYS はじめての絵本ができました！
+          </div>
+          <p class="obi-desc">
+            為了尋找又甜又好吃的神秘愛心水果，9 隻可愛的 LOVELYS 決定攜手分頭出發！一起翻開繪本，加入她們的冒險吧！
+          </p>
+        </div>
+
+        <!-- Hero Actions -->
+        <div class="hero-actions">
+          <a href="#story" class="btn-hero-primary" id="btn-start-reading">
+            <span class="btn-icon">🍓</span>
+            <span>開始閱讀繪本</span>
+          </a>
+          <button type="button" class="btn-hero-secondary" id="btn-hero-reader-mode">
+            <span class="btn-icon">📖</span>
+            <span>翻頁繪本模式</span>
+          </button>
+          <a href="#characters" class="btn-hero-outline">
+            <span class="btn-icon">💖</span>
+            <span>認識 9 隻角色</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SYNOPSIS (大綱 / あらすじ) ==================== -->
+  <section class="synopsis-section" id="synopsis">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-pill">SYNOPSIS</span>
+        <h2 class="section-title">【大綱 / あらすじ】</h2>
+        <p class="section-subtitle">風先生帶來的一段不可思議傳聞，揭開了尋果冒險的序幕...</p>
+      </div>
+
+      <div class="synopsis-card">
+        <div class="synopsis-deco-fruit">🍓✨</div>
+        <div class="synopsis-grid">
+          <div class="synopsis-column ja-col">
+            <div class="synopsis-lang-badge">🇯🇵 日本語</div>
+            <p class="synopsis-text ja-text">
+              TWICE LOVELYSがラブリーフルーツを探すため、力を合わせて冒険の旅に出る物語。
+            </p>
+          </div>
+          <div class="synopsis-divider">
+            <span class="divider-icon">❤️</span>
+          </div>
+          <div class="synopsis-column zh-col">
+            <div class="synopsis-lang-badge">🇹🇼 繁體中文</div>
+            <p class="synopsis-text zh-text">
+              講述 TWICE LOVELYS 為了尋找 Lovely 水果而攜手踏上冒險旅程的故事。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CHARACTERS (人物介紹 / キャラクター紹介) ==================== -->
+  <section class="characters-section" id="characters">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-pill">9 LOVELYS</span>
+        <h2 class="section-title">【人物介紹 / キャラクター紹介】</h2>
+        <p class="section-subtitle">點擊角色卡片可查看其專屬特質與登場的故事章節唷！</p>
+      </div>
+
+      <div class="characters-grid">
+        {{ range hugo.Data.lovelys }}
+        <div class="character-card" 
+             id="char-card-{{ .id }}" 
+             data-char-id="{{ .id }}"
+             data-char-name="{{ .nameEn }}"
+             style="--char-theme: {{ .color }}; --char-accent: {{ .accentColor }};">
+          <div class="char-card-header">
+            <div class="char-avatar-bubble" style="background: {{ .bgGradient }}; border-color: {{ .color }};">
+              <img src="{{ (printf "characters/%s.jpg" .nameEn) | relURL }}" alt="{{ .nameJa }} ({{ .nameEn }})" class="char-avatar-img" loading="lazy">
+            </div>
+            <span class="char-tag-pill">{{ .tag }}</span>
+          </div>
+
+          <div class="char-info">
+            <div class="char-names">
+              <h3 class="char-name-ja">{{ .nameJa }}</h3>
+              <span class="char-name-en">({{ .nameEn }})</span>
+            </div>
+            <div class="char-member-ref">{{ .member }}</div>
+
+            <div class="char-traits">
+              <div class="trait-row">
+                <span class="trait-lang">日文</span>
+                <span class="trait-desc ja">{{ .charJa }}</span>
+              </div>
+              <div class="trait-row">
+                <span class="trait-lang">繁中</span>
+                <span class="trait-desc zh">{{ .charZh }}</span>
+              </div>
+            </div>
+
+            <div class="char-chapters-meta">
+              <span class="meta-label">登場章節：</span>
+              <div class="meta-chips">
+                {{ range .chapters }}
+                <button type="button" class="chapter-jump-chip" data-jump-to="chapter-{{ . }}" title="跳至第 {{ . }} 頁">
+                  {{ . }}
+                </button>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STORY SECTION (繪本內容 / えほん本文) ==================== -->
+  <section class="story-section" id="story">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-pill">PICTURE BOOK STORY</span>
+        <h2 class="section-title">【繪本內容 / えほん本文】</h2>
+        <p class="section-subtitle">每個章節皆可獨立點擊展開或收折，享受輕鬆雙語閱讀！</p>
+      </div>
+
+      <!-- Sticky Story Control Bar -->
+      <div class="story-control-bar" id="storyControlBar">
+        <div class="control-group-left">
+          <!-- Expand / Collapse All -->
+          <div class="control-btn-group">
+            <button type="button" class="ctrl-btn" id="ctrl-expand-all" title="展開所有章節">
+              <span class="ctrl-icon">📂</span>
+              <span class="ctrl-text">全部展開</span>
+            </button>
+            <button type="button" class="ctrl-btn" id="ctrl-collapse-all" title="收折所有章節">
+              <span class="ctrl-icon">📁</span>
+              <span class="ctrl-text">全部收折</span>
+            </button>
+          </div>
+
+          <!-- Language Filters -->
+          <div class="lang-pill-switch" role="group" aria-label="語言切換">
+            <button type="button" class="lang-pill active" data-lang-mode="both">
+              <span>🌸 日中對照</span>
+            </button>
+            <button type="button" class="lang-pill" data-lang-mode="ja">
+              <span>🇯🇵 僅日文</span>
+            </button>
+            <button type="button" class="lang-pill" data-lang-mode="zh">
+              <span>🇹🇼 僅繁中</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group-right">
+          <!-- Chapter Fast Jump Dropdown -->
+          <div class="chapter-select-wrapper">
+            <label for="chapter-select" class="sr-only">快速跳轉章節</label>
+            <span class="select-prefix">跳至</span>
+            <select id="chapter-select" class="chapter-dropdown">
+              <option value="">選擇章節 (01 ~ 22)...</option>
+              {{ range seq 1 22 }}
+                {{ $num := printf "%02d" . }}
+                <option value="chapter-{{ $num }}">第 {{ $num }} 頁</option>
+              {{ end }}
+            </select>
+          </div>
+
+          <!-- Reading Progress -->
+          <div class="reading-progress-pill" id="readingProgressPill">
+            <span class="progress-heart">💖</span>
+            <span class="progress-count" id="progressCount">已展開 22 / 22 頁</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Chapter Pills Bar -->
+      <div class="quick-chapter-nav" id="quickChapterNav" aria-label="章節快速導航">
+        <span class="nav-label">頁數：</span>
+        <div class="quick-pills-scroll">
+          {{ range seq 1 22 }}
+            {{ $num := printf "%02d" . }}
+            <button type="button" class="page-nav-pill" data-target="chapter-{{ $num }}">
+              {{ $num }}
+            </button>
+          {{ end }}
+        </div>
+      </div>
+
+      <!-- The Hugo Raw Content Source Container -->
+      <div class="raw-content-source" id="rawContentSource" style="display: none;">
+        {{ .Content }}
+      </div>
+
+      <!-- The Interactive Collapsible Story Chapters Container -->
+      <div class="story-accordion-container" id="storyAccordionContainer">
+        <noscript>
+          <div class="noscript-content">
+            {{ .Content }}
+          </div>
+        </noscript>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== IMMERSIVE BOOK READER MODAL ==================== -->
+  <div class="book-reader-modal" id="bookReaderModal" aria-hidden="true" role="dialog" aria-label="沉浸式繪本翻頁閱讀器">
+    <div class="reader-backdrop" id="readerBackdrop"></div>
+    <div class="reader-window">
+      <div class="reader-top-bar">
+        <div class="reader-page-indicator">
+          <span class="reader-heart">🍓</span>
+          <span id="readerPageText">第 01 / 22 頁</span>
+        </div>
+
+        <div class="reader-lang-toggle">
+          <button type="button" class="reader-lang-btn active" data-reader-lang="both">雙語</button>
+          <button type="button" class="reader-lang-btn" data-reader-lang="ja">日文</button>
+          <button type="button" class="reader-lang-btn" data-reader-lang="zh">繁中</button>
+        </div>
+
+        <button type="button" class="btn-close-reader" id="btnCloseReader" aria-label="關閉閱讀器">
+          ✕
+        </button>
+      </div>
+
+      <div class="reader-page-viewport" id="readerViewport">
+        <div class="reader-page-card" id="readerPageCard">
+          <div class="reader-chapter-title-tag" id="readerChapterTitle">PAGE 01</div>
+          <div class="reader-content-grid">
+            <div class="reader-lang-pane reader-ja" id="readerJaPane"></div>
+            <div class="reader-lang-pane reader-zh" id="readerZhPane"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reader-bottom-bar">
+        <button type="button" class="reader-nav-btn prev" id="btnReaderPrev" title="上一頁 (←)">
+          <span>← 上一頁</span>
+        </button>
+        <div class="reader-progress-dots" id="readerProgressDots"></div>
+        <button type="button" class="reader-nav-btn next" id="btnReaderNext" title="下一頁 (→)">
+          <span>下一頁 →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</main>
+{{ end }}

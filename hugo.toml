@@ -1,0 +1,17 @@
+baseURL = '/'
+locale = 'zh-tw'
+title = 'TWICE LOVELYS えほん | ラブリーフルーツをさがして'
+disableKinds = ['taxonomy', 'term']
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  description = 'TWICE LOVELYS 繪本《ラブリーフルーツをさがして（尋找 Lovely 水果）》日中雙語對照靜態網站'
+  author = 'TWICE LOVELYS & ONCE'
+  bookTitleJa = 'TWICE LOVELYS えほん'
+  bookSubtitleJa = 'ラブリーフルーツをさがして'
+  bookSubtitleZh = '尋找 Lovely 水果'
+  obiText = 'TWICE LOVELYS はじめての絵本ができました！'
