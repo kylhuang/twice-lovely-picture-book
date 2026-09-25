@@ -56,6 +56,12 @@
   --transition-fast: 0.18s ease;
   --transition-normal: 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
   --transition-smooth: 0.35s ease;
+
+  /* Apple iOS & iPadOS Safe Area Insets */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 /* -------------------- Base & Reset -------------------- */
@@ -68,6 +74,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body.picture-book-theme {
@@ -81,10 +88,12 @@ body.picture-book-theme {
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -122,8 +131,9 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
@@ -164,6 +174,9 @@ img {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px dashed rgba(255, 92, 141, 0.25);
   box-shadow: 0 4px 18px rgba(220, 120, 150, 0.06);
+  padding-top: var(--safe-top);
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
 }
 
 .header-container {
@@ -1006,7 +1019,7 @@ img {
 
 .story-control-bar {
   position: sticky;
-  top: 66px;
+  top: calc(64px + var(--safe-top));
   z-index: 90;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -1452,11 +1465,12 @@ body.filter-zh .story-lang-box.lang-ja {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 1000;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: max(16px, var(--safe-top)) max(16px, var(--safe-right)) max(16px, var(--safe-bottom)) max(16px, var(--safe-left));
 }
 
 .book-reader-modal.active {
@@ -1614,7 +1628,7 @@ body.filter-zh .story-lang-box.lang-ja {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 14px 24px calc(14px + var(--safe-bottom));
   background: #FFF8FA;
   border-top: 2px solid #F6E2EB;
 }
@@ -1693,7 +1707,9 @@ body.filter-zh .story-lang-box.lang-ja {
 .footer-container {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 45px 24px 35px;
+  padding: 45px 24px calc(35px + var(--safe-bottom));
+  padding-left: max(24px, var(--safe-left));
+  padding-right: max(24px, var(--safe-right));
 }
 
 .footer-card {
@@ -1766,8 +1782,8 @@ body.filter-zh .story-lang-box.lang-ja {
 /* Back to top button */
 .btn-back-to-top {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: calc(24px + var(--safe-bottom));
+  right: calc(20px + var(--safe-right));
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1810,67 +1826,249 @@ body.filter-zh .story-lang-box.lang-ja {
   letter-spacing: 0.5px;
 }
 
-/* -------------------- Responsive Design -------------------- */
-@media (max-width: 900px) {
+/* ==========================================================================
+   Responsive Design System for Apple Devices:
+   - iPhone 17, iPhone 17 Pro (393px - 402px)
+   - iPhone 17 Pro Max (430px - 440px)
+   - iPad mini (744px portrait, 1133px landscape)
+   - iPad Air (820px portrait, 1180px landscape)
+   - iPad Pro 11" & 13" (834px / 1024px portrait, 1194px / 1366px landscape)
+   ========================================================================== */
+
+/* -------------------- Large Tablets & Small Laptops (iPad Pro / iPad Air Landscape) -------------------- */
+@media (max-width: 1199px) {
+  .hero-container {
+    grid-template-columns: 380px 1fr;
+    gap: 36px;
+    padding: 0 20px;
+  }
+
+  .characters-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .nav-item {
+    padding: 7px 10px;
+    font-size: 13.5px;
+  }
+}
+
+/* -------------------- Medium Tablets (iPad Pro 11" & iPad Air Portrait: 820px - 834px) -------------------- */
+@media (max-width: 960px) {
+  .header-container {
+    padding: 8px 20px;
+    gap: 10px;
+  }
+
+  .brand-title {
+    font-size: 17.5px;
+  }
+
+  .nav-links {
+    gap: 4px;
+  }
+
+  .nav-item {
+    padding: 6px 9px;
+    font-size: 13px;
+    gap: 4px;
+  }
+
+  .btn-cute-action {
+    padding: 7px 12px;
+    font-size: 12.5px;
+  }
+
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 34px;
+    gap: 32px;
   }
 
   .hero-details {
     align-items: center;
+    max-width: 640px;
+    margin: 0 auto;
   }
 
   .book-title-ribbon {
     align-self: center;
   }
 
-  .synopsis-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .book-obi-card {
+    text-align: left;
+    width: 100%;
   }
 
-  .synopsis-divider {
-    transform: rotate(90deg);
-    margin: 8px 0;
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .characters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
   }
 
   .story-card-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
 
   .reader-content-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .reader-ja {
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 2px dashed #F0DCD3;
-    padding-bottom: 16px;
-  }
-
-  .story-control-bar {
-    top: 60px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
 }
 
-@media (max-width: 680px) {
+/* -------------------- Compact Tablets (iPad mini Portrait: 744px) -------------------- */
+@media (max-width: 768px) {
   .header-container {
     padding: 8px 16px;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+  }
+
+  .brand-title {
+    font-size: 16.5px;
+  }
+
+  .nav-links {
+    gap: 2px;
+  }
+
+  .nav-item {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .btn-cute-action {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .hero-section {
+    padding: 36px 18px 50px;
+  }
+
+  .book-cover-card,
+  .characters-cluster-card {
+    max-width: 340px;
+    padding: 16px 14px;
+  }
+
+  .synopsis-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .synopsis-divider {
+    transform: rotate(90deg);
+    margin: 6px 0;
+  }
+
+  .characters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .story-control-bar {
+    top: calc(58px + var(--safe-top));
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .control-group-left,
+  .control-group-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .reader-window {
+    max-height: 92vh;
+    max-height: calc(100dvh - 30px);
+  }
+
+  .reader-page-viewport {
+    padding: 24px 20px;
+  }
+}
+
+/* -------------------- Smartphones: iPhone 17, 17 Pro, 17 Pro Max (<= 640px) -------------------- */
+@media (max-width: 640px) {
+  .header-container {
+    padding: 8px 12px;
+    gap: 6px;
   }
 
   .nav-links {
     display: none;
   }
 
-  .characters-cluster-card,
-  .book-cover-card {
-    max-width: 320px;
-    padding: 16px 14px;
+  .brand-link {
+    gap: 6px;
+  }
+
+  .brand-avatar-badge {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    border-width: 1.5px;
+  }
+
+  .brand-sub {
+    font-size: 8.5px;
+    letter-spacing: 0.6px;
+  }
+
+  .brand-title {
+    font-size: 14.5px;
+    line-height: 1.1;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .btn-cute-action {
+    padding: 6px 9px;
+    font-size: 11px;
+    gap: 4px;
+    border-radius: var(--radius-pill);
+    min-height: 34px;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 24px 14px 44px;
+  }
+
+  .book-cover-card,
+  .characters-cluster-card {
+    max-width: min(340px, 88vw);
+    padding: 14px 12px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(255, 92, 141, 0.16);
+  }
+
+  .cover-badge {
+    font-size: 11.5px;
+    padding: 4px 12px;
+  }
+
+  .cover-fruit-banner {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 
   .cluster-img-wrap {
@@ -1878,30 +2076,190 @@ body.filter-zh .story-lang-box.lang-ja {
     height: 52px;
   }
 
+  .book-title-ribbon {
+    font-size: 12px;
+    padding: 4px 14px;
+  }
+
   .book-main-title .title-ja {
-    font-size: 26px;
+    font-size: clamp(20px, 5.5vw, 25px);
+    line-height: 1.3;
+    letter-spacing: -0.3px;
   }
 
   .book-main-title .title-zh {
-    font-size: 18px;
+    font-size: clamp(15.5px, 4.2vw, 19px);
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .book-obi-card {
+    padding: 14px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+
+  .obi-headline {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .obi-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn-hero-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+    font-size: 14.5px;
+    min-height: 44px;
+  }
+
+  .btn-hero-secondary,
+  .btn-hero-outline {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 12.5px;
+    min-height: 42px;
+    white-space: nowrap;
+  }
+
+  /* Synopsis */
+  .synopsis-section {
+    padding: 40px 14px;
+  }
+
+  .synopsis-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  .synopsis-text {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* Characters Section */
+  .characters-section {
+    padding: 40px 14px;
+  }
+
+  .characters-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .character-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .char-avatar-bubble {
+    width: 66px;
+    height: 66px;
+  }
+
+  .char-desc-snippet {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Story Section */
+  .story-section {
+    padding: 36px 14px 60px;
   }
 
   .story-control-bar {
-    flex-direction: column;
-    align-items: stretch;
+    top: calc(56px + var(--safe-top));
+    padding: 10px 12px;
+    border-radius: 14px;
+    margin-bottom: 14px;
   }
 
-  .control-group-left,
-  .control-group-right {
+  .control-group-left {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
+    gap: 6px;
   }
 
+  .control-btn-group {
+    display: flex;
+    gap: 4px;
+  }
+
+  .ctrl-btn {
+    padding: 6px 9px;
+    font-size: 12px;
+    min-height: 34px;
+  }
+
+  .lang-pill-switch {
+    padding: 2px;
+    gap: 1px;
+  }
+
+  .lang-pill {
+    padding: 4px 8px;
+    font-size: 11.5px;
+  }
+
+  .control-group-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .chapter-select-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chapter-dropdown {
+    width: 100%;
+    font-size: 12px;
+    padding: 6px 10px;
+    min-height: 34px;
+  }
+
+  .reading-progress-pill {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    min-height: 34px;
+  }
+
+  /* Story Cards */
   summary.story-card-header {
-    padding: 14px 16px;
+    padding: 12px 14px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .page-badge-number {
+    font-size: 11.5px;
+    padding: 3px 8px;
+  }
+
+  .story-header-snippet {
+    font-size: 13.5px;
   }
 
   .header-right-col {
@@ -1909,11 +2267,125 @@ body.filter-zh .story-lang-box.lang-ja {
     justify-content: space-between;
   }
 
+  .story-card-body {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .story-lang-box {
+    padding: 14px 12px;
+  }
+
+  .story-content-text {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .btn-card-next {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 16px;
+    font-size: 13px;
+    min-height: 40px;
+  }
+
+  /* Modal Reader */
+  .book-reader-modal {
+    padding: max(10px, var(--safe-top)) max(8px, var(--safe-right)) max(10px, var(--safe-bottom)) max(8px, var(--safe-left));
+  }
+
   .reader-window {
-    max-height: 95vh;
+    max-height: calc(100dvh - 16px);
+    width: 100%;
+    border-radius: 18px;
+    border-width: 2px;
+  }
+
+  .reader-top-bar {
+    padding: 10px 14px;
+  }
+
+  .reader-page-indicator {
+    font-size: 13px;
+  }
+
+  .reader-lang-btn {
+    padding: 3px 8px;
+    font-size: 11px;
   }
 
   .reader-page-viewport {
-    padding: 20px 16px;
+    padding: 16px 12px;
+  }
+
+  .reader-page-card {
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+
+  .reader-chapter-title-tag {
+    font-size: 12px;
+    padding: 3px 12px;
+    margin-bottom: 14px;
+  }
+
+  .reader-content-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .reader-ja {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 2px dashed #F0DCD3;
+    padding-bottom: 14px;
+    font-size: 15.5px;
+    line-height: 1.8;
+  }
+
+  .reader-zh {
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+
+  .reader-bottom-bar {
+    padding: 10px 14px calc(10px + var(--safe-bottom));
+  }
+
+  .reader-nav-btn {
+    padding: 8px 14px;
+    font-size: 12.5px;
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-back-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: calc(18px + var(--safe-bottom));
+    right: calc(14px + var(--safe-right));
+  }
+}
+
+/* -------------------- Touch & Interaction Optimization (iOS & iPadOS) -------------------- */
+@media (hover: none) and (pointer: coarse) {
+  .cluster-avatar-item:hover,
+  .book-cover-card:hover,
+  .btn-hero-primary:hover,
+  .btn-hero-secondary:hover,
+  .character-card:hover {
+    transform: none;
+  }
+
+  .btn-hero-primary:active,
+  .btn-hero-secondary:active,
+  .btn-cute-action:active,
+  .ctrl-btn:active,
+  .reader-nav-btn:active,
+  .btn-card-next:active {
+    transform: scale(0.97);
+    transition: transform 0.08s ease;
   }
 }
