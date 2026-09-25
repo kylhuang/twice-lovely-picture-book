@@ -318,11 +318,122 @@ img {
   gap: 50px;
 }
 
-/* Hero 9 LOVELYS Characters Showcase */
+/* Hero Book Cover Showcase */
+.hero-cover-showcase,
 .hero-characters-showcase {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.book-cover-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 3px solid #FFE3EC;
+  padding: 20px;
+  box-shadow: 0 16px 36px rgba(255, 92, 141, 0.18), 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.book-cover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(255, 92, 141, 0.28), 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  background: linear-gradient(135deg, #FF5C8D, #FF3366);
+  color: #FFF;
+  font-size: 12.5px;
+  font-weight: 800;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 3px 10px rgba(255, 92, 141, 0.35);
+  letter-spacing: 0.6px;
+}
+
+.cover-star {
+  color: #FFE600;
+  font-size: 12px;
+}
+
+.book-cover-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  background: #FFF5F7;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.book-cover-frame:hover {
+  transform: scale(1.02);
+}
+
+.book-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.book-cover-frame:hover .book-cover-img {
+  transform: scale(1.04);
+}
+
+/* Hardcover book spine highlight on the left edge */
+.book-spine-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 22px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.08) 35%, rgba(255, 255, 255, 0.3) 55%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Subtle gloss / sheen across the cover */
+.book-cover-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 60%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cover-fruit-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #FFF9E6;
+  border: 1.5px dashed #FFD43F;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 800;
+  color: #7A5800;
+  box-shadow: 0 2px 6px rgba(255, 212, 63, 0.2);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .characters-cluster-card {
@@ -1756,9 +1867,10 @@ body.filter-zh .story-lang-box.lang-ja {
     display: none;
   }
 
-  .characters-cluster-card {
+  .characters-cluster-card,
+  .book-cover-card {
     max-width: 320px;
-    padding: 18px 14px;
+    padding: 16px 14px;
   }
 
   .cluster-img-wrap {

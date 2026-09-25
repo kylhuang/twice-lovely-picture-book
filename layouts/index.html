@@ -6,25 +6,20 @@
     <div class="hero-backdrop"></div>
     <div class="hero-container">
       
-      <!-- Left: 9 LOVELYS Characters Showcase Grid -->
-      <div class="hero-characters-showcase">
-        <div class="characters-cluster-card">
-          <div class="cluster-badge">
-            <span class="cluster-star">✦</span>
-            <span>9 LOVELYS 冒險隊</span>
-            <span class="cluster-star">✦</span>
+      <!-- Left: Book Cover Presentation (繪本封面) -->
+      <div class="hero-cover-showcase">
+        <div class="book-cover-card">
+          <div class="cover-badge">
+            <span class="cover-star">✦</span>
+            <span>繪本封面 BOOK COVER</span>
+            <span class="cover-star">✦</span>
           </div>
-          <div class="cluster-avatars-grid">
-            {{ range hugo.Data.lovelys }}
-            <a href="#char-card-{{ .id }}" class="cluster-avatar-item" style="--char-color: {{ .color }};" title="{{ .nameJa }} ({{ .nameEn }}) - {{ .member }}">
-              <div class="cluster-img-wrap">
-                <img src="{{ (printf "characters/%s.jpg" .nameEn) | relURL }}" alt="{{ .nameJa }}" class="cluster-img" loading="lazy">
-              </div>
-              <span class="cluster-name">{{ .nameJa }}</span>
-            </a>
-            {{ end }}
-          </div>
-          <div class="cluster-fruit-banner">
+          <a href="#story" class="book-cover-frame" title="點擊前往閱讀《ラブリーフルーツをさがして》繪本">
+            <div class="book-spine-effect"></div>
+            <img src="{{ "cover.jpg" | relURL }}" alt="TWICE LOVELYS えほん ラブリーフルーツをさがして 繪本封面" class="book-cover-img" width="1024" height="1024" loading="eager">
+            <div class="book-cover-sheen"></div>
+          </a>
+          <div class="cover-fruit-banner">
             <span class="fruit-icon">🍓</span>
             <span class="fruit-text">尋找不可思議的 Lovely 水果！</span>
             <span class="fruit-icon">✨</span>
@@ -123,7 +118,7 @@
       </div>
 
       <div class="characters-grid">
-        {{ range hugo.Data.lovelys }}
+        {{ range site.Data.lovelys }}
         <div class="character-card" 
              id="char-card-{{ .id }}" 
              data-char-id="{{ .id }}"
