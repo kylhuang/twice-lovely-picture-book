@@ -1827,6 +1827,195 @@ body.filter-zh .story-lang-box.lang-ja {
 }
 
 /* ==========================================================================
+   Visitor Counter Dock & Floating Pill (右下角網站訪問人次計數器)
+   ========================================================================== */
+.visitor-counter-dock {
+  position: fixed;
+  bottom: calc(84px + var(--safe-bottom));
+  right: calc(20px + var(--safe-right));
+  z-index: 79;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  transition: all var(--transition-normal);
+}
+
+.visitor-counter-pill {
+  pointer-events: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid #FFC0D3;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 20px rgba(255, 92, 141, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.visitor-counter-pill:hover,
+.visitor-counter-pill:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 24px rgba(255, 92, 141, 0.26), 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.counter-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFEBF2 0%, #FFF3F7 100%);
+  border: 1px solid #FFD4E2;
+  flex-shrink: 0;
+}
+
+.counter-strawberry {
+  font-size: 16px;
+  line-height: 1;
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: strawberryGiggle 3s ease-in-out infinite;
+}
+
+@keyframes strawberryGiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-8deg) scale(1.08); }
+  50% { transform: rotate(0deg) scale(1); }
+  75% { transform: rotate(8deg) scale(1.08); }
+}
+
+.counter-live-dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 9px;
+  height: 9px;
+  background-color: #2ED573;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(46, 213, 115, 0.4);
+  animation: liveDotPulse 2s infinite;
+}
+
+@keyframes liveDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(46, 213, 115, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+}
+
+.counter-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.counter-label-line {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.counter-label-ja {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.2px;
+}
+
+.counter-label-tag {
+  display: inline-block;
+  font-size: 8.5px;
+  font-weight: 900;
+  color: #FF5C8D;
+  background: #FFEBF2;
+  padding: 1px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.6px;
+}
+
+.counter-value-line {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.counter-digits {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--color-primary);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  min-width: 20px;
+}
+
+.counter-suffix {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Tooltip on hover */
+.counter-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: #3B2E2A;
+  color: #FFFDF9;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.counter-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #3B2E2A transparent transparent transparent;
+}
+
+.visitor-counter-pill:hover .counter-tooltip,
+.visitor-counter-pill:focus-visible .counter-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.counter-beacon-img {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  border: 0;
+}
+
+/* ==========================================================================
    Responsive Design System for Apple Devices:
    - iPhone 17, iPhone 17 Pro (393px - 402px)
    - iPhone 17 Pro Max (430px - 440px)
@@ -2366,6 +2555,47 @@ body.filter-zh .story-lang-box.lang-ja {
     height: 44px;
     bottom: calc(18px + var(--safe-bottom));
     right: calc(14px + var(--safe-right));
+  }
+
+  .visitor-counter-dock {
+    bottom: calc(68px + var(--safe-bottom));
+    right: calc(14px + var(--safe-right));
+  }
+
+  .visitor-counter-pill {
+    padding: 5px 11px 5px 8px;
+    gap: 7px;
+    box-shadow: 0 4px 14px rgba(255, 92, 141, 0.16);
+  }
+
+  .counter-icon-wrap {
+    width: 28px;
+    height: 28px;
+  }
+
+  .counter-strawberry {
+    font-size: 14px;
+  }
+
+  .counter-label-ja {
+    font-size: 10px;
+  }
+
+  .counter-label-tag {
+    font-size: 7.5px;
+    padding: 0.5px 3.5px;
+  }
+
+  .counter-digits {
+    font-size: 14px;
+  }
+
+  .counter-suffix {
+    font-size: 10px;
+  }
+
+  .counter-tooltip {
+    display: none;
   }
 }
 

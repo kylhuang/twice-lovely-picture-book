@@ -492,7 +492,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // =========================================================================
+  // 8. Visitor Counter Fetcher & Number Animation
+  // =========================================================================
+  async function initVisitorCounter() {
+    const digitsEl = document.getElementById('visitor-count-number');
+    if (!digitsEl) return;
+
+    // Retrieve cached count for instant zero-flicker display
+    const cached = localStorage.getItem('lovely_book_visits_count');
+    if (cached) {
+      digitsEl.textContent = Number(cached).toLocaleString();
+    }
+
+    function animateCounter(startVal, endVal, duration = 800) {
+      if (isNaN(startVal) || isNaN(endVal) || startVal === endVal) {
+        digitsEl.textContent = Number(endVal).toLocaleString();
+        return;
+      }
+      const startTime = performance.now();
+      function updateNumber(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(startVal + (endVal - startVal) * ease);
+        digitsEl.textContent = current.toLocaleString();
+        if (progress < 1) {
+          requestAnimationFrame(updateNumber);
+        } else {
+          digitsEl.textContent = Number(endVal).toLocaleString();
+        }
+      }
+      requestAnimationFrame(updateNumber);
+    }
+
+    try {
+      const response = await fetch('/api/visits', {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data && typeof data.count === 'number' && data.count > 0) {
+          const prev = cached ? parseInt(cached, 10) : 0;
+          animateCounter(prev, data.count);
+          localStorage.setItem('lovely_book_visits_count', data.count);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('Visitor counter API fallback active:', err);
+    }
+
+    if (!cached) {
+      const initial = 1;
+      digitsEl.textContent = initial.toLocaleString();
+      localStorage.setItem('lovely_book_visits_count', initial);
+    }
+  }
+
   // Initialize
   parseAndBuildStoryAccordion();
   initFloatingSparkles();
+  initVisitorCounter();
 });

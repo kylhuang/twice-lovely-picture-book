@@ -33,6 +33,33 @@
     </div>
   </div>
 
+  <!-- Floating Visitor Counter Dock (右下角網站訪問人次計數器) -->
+  <aside class="visitor-counter-dock" id="visitor-counter-dock" aria-label="網站訪問人次">
+    <div class="visitor-counter-pill" id="visitor-counter" role="status" aria-live="polite" tabindex="0">
+      <div class="counter-icon-wrap" aria-hidden="true">
+        <span class="counter-strawberry">🍓</span>
+        <span class="counter-live-dot" title="連線正常"></span>
+      </div>
+      <div class="counter-text-group">
+        <div class="counter-label-line">
+          <span class="counter-label-ja">訪問人次</span>
+          <span class="counter-label-tag">VISITORS</span>
+        </div>
+        <div class="counter-value-line">
+          <span class="counter-digits" id="visitor-count-number">...</span>
+          <span class="counter-suffix">人次</span>
+        </div>
+      </div>
+      <!-- Tooltip -->
+      <div class="counter-tooltip" role="tooltip" aria-hidden="true">
+        <span>💖 歡迎光臨 TWICE LOVELYS 繪本世界！</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Hidden counter beacon to register visit securely -->
+  <img src="https://hits.sh/lovely-book.vercel.app.svg" class="counter-beacon-img" alt="" aria-hidden="true" width="1" height="1">
+
   <!-- Back to top button -->
   <button id="btn-back-to-top" class="btn-back-to-top" title="回到頂部" aria-label="回到頂部">
     <span class="arrow-icon">↑</span>
